@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { useGetUserQuery } from '../redux/slices/githubApiSlice';
 
@@ -6,6 +7,8 @@ const Home: React.FC = () => {
   const [login, setLogin] = useState('');
   const [skip, setSkip] = useState(true);
   const [hasErrorMessage, setErrorMessage] = useState(false);
+
+  const navigate = useNavigate();
 
   const { isFetching, isSuccess, isError } = useGetUserQuery(login, { skip });
 
@@ -18,6 +21,10 @@ const Home: React.FC = () => {
 
     setSkip(false);
   };
+
+  useEffect(() => {
+    if (isSuccess) navigate(`/${login.toLowerCase()}`);
+  });
 
   useEffect(() => {
     if (isError) {
@@ -43,7 +50,7 @@ const Home: React.FC = () => {
           />
 
           <button type="submit" className="btn">
-            Continue
+            Продолжить
           </button>
         </div>
       </form>
