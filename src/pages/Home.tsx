@@ -5,6 +5,7 @@ import { useGetUserQuery } from '../redux/slices/githubApiSlice';
 const Home: React.FC = () => {
   const [login, setLogin] = useState('');
   const [skip, setSkip] = useState(true);
+  const [hasErrorMessage, setErrorMessage] = useState(false);
 
   const { isFetching, isSuccess, isError } = useGetUserQuery(login, { skip });
 
@@ -18,10 +19,15 @@ const Home: React.FC = () => {
     setSkip(false);
   };
 
-  useEffect(() => setSkip(true), [skip]);
+  useEffect(() => {
+    if (isError) {
+      setErrorMessage(true);
+      setSkip(true);
+    }
+  }, [isError]);
 
   return (
-    <main className="flex justify-center items-center grow box">
+    <main className="flex flex-col justify-center items-center grow box">
       {isFetching && <Loader />}
 
       <form
@@ -41,6 +47,11 @@ const Home: React.FC = () => {
           </button>
         </div>
       </form>
+      {hasErrorMessage && (
+        <p className="mt-6 text-center">
+          Логина не существует. Введите другого пользователя.
+        </p>
+      )}
     </main>
   );
 };
