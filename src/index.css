@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.btn {
+  @apply outline-0 rounded-md py-1.5 px-4 bg-primary text-white text-sm hover:opacity-90 transition-opacity duration-300 whitespace-nowrap;
+}
+
+.box {
+  @apply container max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8;
+}
