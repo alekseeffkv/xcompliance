@@ -9,6 +9,12 @@ module.exports = {
       colors: {
         primary: '#24292f',
       },
+      keyframes: {
+        'custom-bounce': {
+          '0%, 100%': { transform: 'scale(0)' },
+          '50%': { transform: 'scale(1)' },
+        },
+      },
     },
   },
   plugins: [],

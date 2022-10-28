@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Loader from '../components/Loader';
 import { useGetUserQuery } from '../redux/slices/githubApiSlice';
 
 const Home: React.FC = () => {
@@ -21,6 +22,8 @@ const Home: React.FC = () => {
 
   return (
     <main className="flex justify-center items-center grow box">
+      {isFetching && <Loader />}
+
       <form
         className="w-full sm:w-2/3 lg:w-1/2 xl:w-1/3"
         onSubmit={handleSubmit}
