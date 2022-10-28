@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   return (
     <header>
       <div className="box py-4 h-full bg-primary">
