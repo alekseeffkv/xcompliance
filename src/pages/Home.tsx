@@ -10,7 +10,7 @@ const Home: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { isFetching, isSuccess, isError } = useGetUserQuery(login, { skip });
+  const { isFetching, isSuccess, error } = useGetUserQuery(login, { skip });
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setLogin(e.target.value);
@@ -27,11 +27,11 @@ const Home: React.FC = () => {
   });
 
   useEffect(() => {
-    if (isError) {
+    if ((error as { status: number })?.status === 404) {
       setErrorMessage(true);
       setSkip(true);
     }
-  }, [isError]);
+  }, [error]);
 
   useEffect(() => {
     const keyboardShortcuts = (e: KeyboardEvent) => {
