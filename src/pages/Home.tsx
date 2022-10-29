@@ -33,6 +33,18 @@ const Home: React.FC = () => {
     }
   }, [isError]);
 
+  useEffect(() => {
+    const keyboardShortcuts = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') setSkip(false);
+    };
+
+    document.addEventListener('keyup', keyboardShortcuts);
+
+    return () => {
+      document.removeEventListener('keyup', keyboardShortcuts);
+    };
+  }, []);
+
   return (
     <main className="flex flex-col justify-center items-center grow box">
       {isFetching && <Loader />}
