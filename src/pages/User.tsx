@@ -14,7 +14,7 @@ const User: React.FC = () => {
 
   return (
     <main className="grow box">
-      {isFetchingUser && isFetchingRepos && <Loader />}
+      {(isFetchingUser || isFetchingRepos) && <Loader />}
 
       <div className="flex items-center">
         <div className="w-1/5 my-8 mr-8">
