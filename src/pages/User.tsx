@@ -1,18 +1,21 @@
 import { Link, useParams } from 'react-router-dom';
+import Loader from '../components/Loader';
 import {
   useGetReposQuery,
   useGetUserQuery,
 } from '../redux/slices/githubApiSlice';
 
 const User: React.FC = () => {
-  const { login } = useParams();
+  const { login = '' } = useParams();
 
-  const { data: user } = useGetUserQuery(login ?? '');
+  const { data: user } = useGetUserQuery(login);
 
-  const { data: repos } = useGetReposQuery(user?.repos_url ?? '');
+  const { data: repos, isFetching } = useGetReposQuery(user?.repos_url ?? '');
 
   return (
     <main className="grow box">
+      {isFetching && <Loader />}
+
       <div className="flex items-center">
         <div className="w-1/5 my-8 mr-8">
           <img
@@ -45,7 +48,10 @@ const User: React.FC = () => {
               repos.map(({ name, language, description, stargazers_count }) => (
                 <tr key={name}>
                   <td className="border p-2">
-                    <Link to={`/${login}/${name}`} className="hover:underline">
+                    <Link
+                      to={`/${login}/${name}/commits`}
+                      className="hover:underline"
+                    >
                       {name}
                     </Link>
                   </td>

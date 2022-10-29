@@ -14,6 +14,11 @@ type Repo = {
   stargazers_count: number;
 };
 
+type Commit = {
+  sha: string;
+  commit: { author: { name: string; date: string } };
+};
+
 export const githubApiSlice = createApi({
   reducerPath: 'githubApi',
   baseQuery: fetchBaseQuery(),
@@ -24,7 +29,12 @@ export const githubApiSlice = createApi({
     getRepos: builder.query<Repo[], string>({
       query: (repos_url) => `${repos_url}`,
     }),
+    getCommits: builder.query<Commit[], { login: string; name: string }>({
+      query: ({ login, name }) =>
+        `https://api.github.com/repos/${login}/${name}/commits`,
+    }),
   }),
 });
 
-export const { useGetUserQuery, useGetReposQuery } = githubApiSlice;
+export const { useGetUserQuery, useGetReposQuery, useGetCommitsQuery } =
+  githubApiSlice;
