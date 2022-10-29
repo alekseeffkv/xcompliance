@@ -8,13 +8,13 @@ import {
 const User: React.FC = () => {
   const { login = '' } = useParams();
 
-  const { data: user } = useGetUserQuery(login);
+  const { data: user, isFetching: isFetchingUser } = useGetUserQuery(login);
 
-  const { data: repos, isFetching } = useGetReposQuery(user?.repos_url ?? '');
+  const { data: repos, isFetching: isFetchingRepos } = useGetReposQuery(login);
 
   return (
     <main className="grow box">
-      {isFetching && <Loader />}
+      {isFetchingUser && isFetchingRepos && <Loader />}
 
       <div className="flex items-center">
         <div className="w-1/5 my-8 mr-8">

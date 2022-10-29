@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 type User = {
   login: string;
   avatar_url: string;
-  repos_url: string;
   name: string | null;
 };
 
@@ -21,17 +20,16 @@ type Commit = {
 
 export const githubApiSlice = createApi({
   reducerPath: 'githubApi',
-  baseQuery: fetchBaseQuery(),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.github.com' }),
   endpoints: (builder) => ({
     getUser: builder.query<User, string>({
-      query: (login) => `https://api.github.com/users/${login}`,
+      query: (login) => `/users/${login}`,
     }),
     getRepos: builder.query<Repo[], string>({
-      query: (repos_url) => `${repos_url}`,
+      query: (login) => `/users/${login}/repos`,
     }),
     getCommits: builder.query<Commit[], { login: string; name: string }>({
-      query: ({ login, name }) =>
-        `https://api.github.com/repos/${login}/${name}/commits`,
+      query: ({ login, name }) => `/repos/${login}/${name}/commits`,
     }),
   }),
 });
